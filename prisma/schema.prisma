@@ -18,3 +18,31 @@ model users {
   image     String
   createdAt DateTime @default(now())
 }
+
+model Movie {
+    id                          String  @id @default(cuid())
+
+    CPB                         String? @unique
+    CLASSIFICACAO_OBRA          String?
+    DURACAO_TOTAL               Float?
+    TIPO_OBRA                   String?
+    COPRODUCAO_INTERNACIONAL    String?
+    CNPJ_REQUERENTE             String?
+    SEGMENTO_DESTINACAO_INICIAL String?
+    SUBTIPO_OBRA                String?
+    DATA_EMISSAO_CPB            String?
+    ORGANIZACAO_TEMPORAL        String?
+    UF_REQUERENTE               String?
+    TITULO_ORIGINAL             String?
+    ANO_PRODUCAO_FINAL          String?
+    REQUERENTE                  String?
+    SITUACAO_OBRA               String?
+    MUNICIPIO_REQUERENTE        String?
+    ANO_PRODUCAO_INICIAL        String?
+    QUANTIDADE_EPISODIOS        String?
+    
+    createdAt                   DateTime @default(now())
+    updatedAt                   DateTime @updatedAt
+    
+    @@index([CPB])
+}
