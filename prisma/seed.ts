@@ -1,17 +1,24 @@
 import path from 'path';
-import fs from 'fs';
+import fs, { readFileSync } from 'fs';
 
 import prisma from '../lib/prisma'
 
 import { Movie } from '@/types';
 
-const SEED_PATH = '/prisma/seed/2024.json'
+const SEED_PATH = '/prisma/seed'
 
 const getData = () => {
   const dirPath = path.join(process.cwd(), SEED_PATH);
-  const buffer = fs.readFileSync(dirPath);
-  const { data } = JSON.parse(buffer.toString()) as { data: Movie[] }
-  return data
+  const folders = fs.readdirSync(dirPath);
+  const results = []
+  for (const file of folders) {
+    const filePath = path.join(process.cwd(), `${SEED_PATH}/${file}`);
+    const buffer = readFileSync(filePath);
+    const { data } = JSON.parse(buffer.toString()) as { data: Movie[] }
+    results.push(data)
+  }
+  const movies = results.flat();
+  return movies
 }
 
 async function main() {
@@ -27,13 +34,14 @@ async function main() {
   for (const movie of data) {
     await prisma.movie.upsert({
       where: {
-        id: movie.id ? movie.id : crypto.randomUUID().toString(),
+        id: crypto.randomUUID().toString(),
       },
       create: movie,
       update: {},
     });
   }
 }
+
 main()
   .then(async () => {
     await prisma.$disconnect()
