@@ -21,24 +21,40 @@ const getData = () => {
   return movies
 }
 
-async function main() {
-  const data = getData();
-  const hasDB = await prisma.movie.count() > 0
+const getSingleData = (json: string) => {
+  const filePath = path.join(process.cwd(), `${SEED_PATH}/${json}.json`);
+  const buffer = readFileSync(filePath);
+  const { data } = JSON.parse(buffer.toString()) as { data: Movie[] }
+  return data;
+}
 
-  if(hasDB) {
-    console.log("====> DB Already seeded");
-    return;
-  }
+async function main() {
+  // const data = getData();
+  // Next 2023
+  const data = getSingleData("2006")
+  // const hasDB = await prisma.movie.count() > 0
+
+  // if(hasDB) {
+  //   console.log("====> DB Already seeded");
+  //   return;
+  // }
   console.log("====> Seeding DB...");
 
   for (const movie of data) {
-    await prisma.movie.upsert({
-      where: {
-        id: crypto.randomUUID().toString(),
-      },
-      create: movie,
-      update: {},
-    });
+    try {
+      await prisma.movie.upsert({
+        where: {
+          id: crypto.randomUUID().toString(),
+          CPB: movie.CPB
+        },
+        create: movie,
+        update: movie,
+      });
+      console.log(".");
+    } catch (error) {
+      console.error(error);
+      
+    }
   }
 }
 
