@@ -20,6 +20,7 @@ export async function GET(request: Request) {
       TIPO_OBRA: true,
       ANO_PRODUCAO_INICIAL: true,
       ANO_PRODUCAO_FINAL: true,
+      CPB: true
     },
     take: 5,
     orderBy: {
