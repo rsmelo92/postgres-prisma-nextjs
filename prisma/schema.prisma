@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -34,11 +35,11 @@ model Movie {
     ORGANIZACAO_TEMPORAL        String?
     UF_REQUERENTE               String?
     TITULO_ORIGINAL             String?
-    ANO_PRODUCAO_FINAL          String?
     REQUERENTE                  String?
     SITUACAO_OBRA               String?
     MUNICIPIO_REQUERENTE        String?
     ANO_PRODUCAO_INICIAL        String?
+    ANO_PRODUCAO_FINAL          String?
     QUANTIDADE_EPISODIOS        String?
     
     createdAt                   DateTime @default(now())

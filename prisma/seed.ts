@@ -29,6 +29,7 @@ const getSingleData = (json: string) => {
 }
 
 async function main() {
+  return;
   // const data = getData();
   // Next 2023
   const data = getSingleData("2006")
