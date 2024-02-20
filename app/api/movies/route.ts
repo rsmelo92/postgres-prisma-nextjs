@@ -6,14 +6,24 @@ export const dynamic = 'force-dynamic'; // static by default, unless reading the
  
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  console.log(searchParams);
+  
   const cursor = searchParams.get('cursor') ?? "";
+  const query = searchParams.get('query') ?? "";
+  console.log(query);
+  console.log(JSON.parse(query));
+  const payload = query ? JSON.parse(query) : {};
+  
   if(cursor === "") {
     const result = await prisma.movie.findMany({
+      where: payload,
       take: 10,
       orderBy: {
         id: "asc"
       },
     })
+    console.log(result);
+    
     return new Response(JSON.stringify(result));
   }
 
