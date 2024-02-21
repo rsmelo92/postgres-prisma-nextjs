@@ -16,7 +16,10 @@ export async function GET(request: Request) {
   
   if(cursor === "") {
     const result = await prisma.movie.findMany({
-      where: payload,
+      where: {
+        ...payload,
+        SEGMENTO_DESTINACAO_INICIAL: "SALAS DE EXIBIÇÃO"
+      },
       take: 10,
       orderBy: {
         id: "asc"
@@ -28,6 +31,9 @@ export async function GET(request: Request) {
   }
 
   const result = await prisma.movie.findMany({
+    where: {
+      SEGMENTO_DESTINACAO_INICIAL: "SALAS DE EXIBIÇÃO"
+    },
     take: 10,
     skip: 1,
     orderBy: {

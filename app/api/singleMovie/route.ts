@@ -9,6 +9,7 @@ export async function GET(request: Request) {
   const CPB = searchParams.get('CPB');
   const result = await prisma.movie.findFirst({
     where: {
+      SEGMENTO_DESTINACAO_INICIAL: "SALAS DE EXIBIÇÃO",
       CPB,
     },
   })

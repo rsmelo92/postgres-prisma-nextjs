@@ -10,6 +10,7 @@ export async function GET(request: Request) {
   if(query === "") return new Response();
   const result = await prisma.movie.findMany({
     where: {
+      SEGMENTO_DESTINACAO_INICIAL: "SALAS DE EXIBIÇÃO",
       TITULO_ORIGINAL: {
         search: query,
         mode: 'insensitive'
