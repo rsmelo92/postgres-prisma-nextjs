@@ -32,6 +32,7 @@ export async function GET(request: Request) {
 
   const result = await prisma.movie.findMany({
     where: {
+      ...payload,
       SEGMENTO_DESTINACAO_INICIAL: "SALAS DE EXIBIÇÃO"
     },
     take: 10,
